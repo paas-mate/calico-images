@@ -22,15 +22,17 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Save calico cni
-        run: docker pull docker.io/calico/cni:v3.24.5; docker save docker.io/calico/cni:v3.24.5 -o calico-cni.tar.gz
+        run: docker pull docker.io/calico/cni:v3.25.0; docker save docker.io/calico/cni:v3.25.0 -o calico-cni.tar.gz
       - name: Save calico node
-        run: docker pull docker.io/calico/node:v3.24.5; docker save docker.io/calico/node:v3.24.5 -o calico-node.tar.gz
+        run: docker pull docker.io/calico/node:v3.25.0; docker save docker.io/calico/node:v3.25.0 -o calico-node.tar.gz
       - name: Save calico kube controllers
-        run: docker pull docker.io/calico/kube-controllers:v3.24.5; docker save docker.io/calico/kube-controllers:v3.24.5 -o calico-kube-controllers.tar.gz
+        run: docker pull docker.io/calico/kube-controllers:v3.25.0; docker save docker.io/calico/kube-controllers:v3.25.0 -o calico-kube-controllers.tar.gz
+      - name: Save calico ctl
+        run: docker pull docker.io/calico/ctl:v3.25.0; docker save docker.io/calico/ctl:v3.25.0 -o calico-ctl.tar.gz
       - uses: dev-drprasad/delete-tag-and-release@v0.2.0
         with:
           delete_release: true
-          tag_name: v3.24.5
+          tag_name: v3.25.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -38,7 +40,7 @@ jobs:
         uses: tvdias/github-tagger@v0.0.2
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          tag: v3.24.5
+          tag: v3.25.0
 
       # Creates the new release with the binary as a release asset.
       # If the previous Action was skipped, then this keeps the same tag as the
@@ -46,13 +48,14 @@ jobs:
       - name: Create new release
         uses: softprops/action-gh-release@v1
         with:
-          body: "v3.24.5"
-          name: "v3.24.5"
-          tag_name: v3.24.5
+          body: "v3.25.0"
+          name: "v3.25.0"
+          tag_name: v3.25.0
           files: |
             calico-cni.tar.gz
             calico-node.tar.gz
             calico-kube-controllers.tar.gz
+            calico-ctl.tar.gz
           draft: false
           prerelease: false
         env:
