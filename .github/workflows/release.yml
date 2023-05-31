@@ -29,7 +29,7 @@ jobs:
         run: docker pull docker.io/calico/kube-controllers:v3.25.0; docker save docker.io/calico/kube-controllers:v3.25.0 -o calico-kube-controllers.tar.gz
       - name: Save calico ctl
         run: docker pull docker.io/calico/ctl:v3.25.0; docker save docker.io/calico/ctl:v3.25.0 -o calico-ctl.tar.gz
-      - uses: dev-drprasad/delete-tag-and-release@v0.2.0
+      - uses: dev-drprasad/delete-tag-and-release@v1.0.1
         with:
           delete_release: true
           tag_name: v3.25.0
